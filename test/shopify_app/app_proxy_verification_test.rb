@@ -49,7 +49,7 @@ class AppProxyVerificationTest < ActionController::TestCase
   private
 
   def query_string_valid?(query_string)
-    AppProxyVerificationController.new.query_string_valid?(query_string)
+    AppProxyVerificationController.new.send(:query_string_valid?,query_string)
   end
 
   def with_test_routes

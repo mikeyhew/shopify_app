@@ -11,6 +11,8 @@ module ShopifyApp
       return head :unauthorized unless query_string_valid?(request.query_string)
     end
 
+    private
+
     def query_string_valid?(query_string)
       query_hash = Rack::Utils.parse_query(query_string)
 
@@ -24,8 +26,6 @@ module ShopifyApp
         signature
       )
     end
-
-    private
 
     def calculated_signature(sorted_query_params)
       OpenSSL::HMAC.hexdigest(
