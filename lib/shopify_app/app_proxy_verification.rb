@@ -2,9 +2,11 @@ module ShopifyApp
   module AppProxyVerification
     extend ActiveSupport::Concern
 
-    # Usage:
-    #   include ShopifyApp::AppProxyVerification
-    #   before_action :verify_proxy_request
+    included do
+      skip_before_action :verify_authenticity_token
+      before_action :verify_proxy_request
+    end
+
     def verify_proxy_request
       return head :unauthorized unless query_string_valid?(request.query_string)
     end
