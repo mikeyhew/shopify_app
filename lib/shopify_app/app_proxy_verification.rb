@@ -19,15 +19,19 @@ module ShopifyApp
 
       sorted_params = query_hash.collect{|k,v| "#{k}=#{Array(v).join(',')}"}.sort.join
 
-      calculated_signature = OpenSSL::HMAC.hexdigest(
+      ActiveSupport::SecurityUtils.secure_compare(
+        calculated_signature(sorted_params),
+        signature
+      )
+    end
+
+    private
+
+    def calculated_signature(sorted_query_params)
+      OpenSSL::HMAC.hexdigest(
         OpenSSL::Digest.new('sha256'),
         ShopifyApp.configuration.secret,
-        sorted_params
-      )
-
-      ActiveSupport::SecurityUtils.secure_compare(
-        calculated_signature,
-        signature
+        sorted_query_params
       )
     end
   end
