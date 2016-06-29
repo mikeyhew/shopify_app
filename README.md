@@ -215,7 +215,7 @@ The engine provides a mixin for verifying incoming HTTP requests sent via an App
     namespace :app_proxy do
       # simple routes without a specified controller will go to AppProxyController
       get :basic
-    
+
       # more complex routes will go to controllers in the AppProxy namespace
       resources :reviews
       # GET /app_proxy/reviews will now be routed to
@@ -228,12 +228,12 @@ The engine provides a mixin for verifying incoming HTTP requests sent via an App
     # app/controllers/app_proxy_controller.rb
     class AppProxyController < ApplicationController
       include ShopifyApp::AppProxyVerification
-    
+
       def basic
         render text: 'Signature verification passed!'
       end
     end
-    
+
     # app/controllers/app_proxy/reviews_controller.rb
     class ReviewsController < ApplicationController
       include ShopifyApp::AppProxyVerification
