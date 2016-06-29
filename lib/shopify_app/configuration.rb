@@ -11,6 +11,7 @@ module ShopifyApp
     alias_method  :embedded_app?, :embedded_app
     attr_accessor :webhooks
     attr_accessor :scripttags
+    attr_accessor :carrier_services
 
     # customise ActiveJob queue names
     attr_accessor :scripttags_manager_queue_name
@@ -31,12 +32,20 @@ module ShopifyApp
       scripttags.present?
     end
 
+    def has_carrier_services?
+      carrier_services.present?
+    end
+
     def scripttags_manager_queue_name
       @scripttags_manager_queue_name ||= :default
     end
 
     def webhooks_manager_queue_name
       @webhooks_manager_queue_name ||= :default
+    end
+
+    def carrier_services_queue_name
+      @carrier_services_queue_name ||= :default
     end
   end
 

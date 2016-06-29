@@ -19,6 +19,7 @@ module ShopifyApp
         login_shop
         install_webhooks
         install_scripttags
+        install_carrier_services
 
         flash[:notice] = I18n.t('.logged_in')
         redirect_to_with_fallback return_address
@@ -80,6 +81,16 @@ module ShopifyApp
         shop_name,
         token,
         ShopifyApp.configuration.scripttags
+      )
+    end
+
+    def install_carrier_services
+      return unless ShopifyApp.configuration.has_carrier_services?
+
+      CarrierServicesManager.queue(
+        shop_name,
+        token,
+        ShopifyApp.configuration.carrier_services
       )
     end
 
